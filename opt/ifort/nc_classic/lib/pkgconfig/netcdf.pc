@@ -1,0 +1,16 @@
+prefix=/home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc_classic
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+ccompiler=icc
+cppcompiler=@CXX@
+fcompiler=@FC@
+fflags=@FFLAGS@ -I${includedir}
+flibs=@NC_FLIBS@
+
+Name: netcdf
+Description: NetCDF Client Library
+Version: 4.2
+Libs: -L${libdir} -L/home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc_classic/lib -lnetcdf -lm 
+Cflags: -I${includedir}
+

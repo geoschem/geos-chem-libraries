@@ -1,0 +1,62 @@
+	    SUMMARY OF THE HDF5 CONFIGURATION
+	    =================================
+
+General Information:
+-------------------
+		   HDF5 Version: 1.8.8
+		  Configured on: Tue May  8 11:56:13 EDT 2012
+		  Configured by: bmy@rhea.as.harvard.edu
+		 Configure mode: production
+		    Host system: x86_64-unknown-linux-gnu
+	      Uname information: Linux rhea.as.harvard.edu 2.6.18-194.17.1.el5_lustre.1.8.5 #1 SMP Mon Nov 15 15:48:43 MST 2010 x86_64 x86_64 x86_64 GNU/Linux
+		       Byte sex: little-endian
+		      Libraries: 
+	     Installation point: /home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc4
+
+Compiling Options:
+------------------
+               Compilation Mode: production
+                     C Compiler: /opt/intel/Compiler/11.1/069/bin/intel64/icc ( Intel(R) C Intel(R) 64 Compiler Version 11.1 Build 20100203 Package ID: l_cproc_p_11.1.069)
+                         CFLAGS: -fpic -mcmodel=medium
+                      H5_CFLAGS: -std=c99  -O3
+                      AM_CFLAGS: 
+                       CPPFLAGS: 
+                    H5_CPPFLAGS: -D_POSIX_C_SOURCE=199506L   -DNDEBUG -UH5_DEBUG_API
+                    AM_CPPFLAGS: -I/home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc4/include -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE 
+               Shared C Library: no
+               Static C Library: yes
+  Statically Linked Executables: no
+                        LDFLAGS: -L/home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc4/lib
+                     H5_LDFLAGS: 
+                     AM_LDFLAGS:  -L/home/bmy/GC/git_repos/GEOS-Chem-Libraries/src/../opt/ifort/nc4/lib
+ 	 	Extra libraries:  -lz -lrt -lm 
+ 		       Archiver: ar
+ 		 	 Ranlib: ranlib
+ 	      Debugged Packages: 
+		    API Tracing: no
+
+Languages:
+----------
+                        Fortran: no
+
+                            C++: no
+
+Features:
+---------
+                  Parallel HDF5: no
+             High Level library: yes
+                   Threadsafety: no
+            Default API Mapping: v18
+ With Deprecated Public Symbols: yes
+         I/O filters (external): deflate(zlib)
+         I/O filters (internal): shuffle,fletcher32,nbit,scaleoffset
+                            MPE: no
+                     Direct VFD: no
+                        dmalloc: no
+Clear file buffers before write: yes
+           Using memory checker: no
+         Function Stack Tracing: no
+                           GPFS: no
+      Strict File Format Checks: no
+   Optimization Instrumentation: no
+       Large File Support (LFS): yes
