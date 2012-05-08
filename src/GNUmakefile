@@ -15,7 +15,6 @@
 #  \item netCDF C/C++ libraries version 4.2
 #  \item netCDF F77/F90 libraries version 4.2
 #  \end{enumerate}
-#  \end{enumerate}
 #
 #  We recommend that you build the full netCDF-4.2 libraries, as this is the 
 #  most recent library version.  You also have the option to build the 
