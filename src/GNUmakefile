@@ -104,37 +104,30 @@
 #                                                                             .
 #     If you use "csh" or "tcsh", add this to your .cshrc file:
 #     --------------------------------------------------------------------
-#     setenv ROOT_LIBRARY_DIR  "same directory as root_library_dir above"
-#     setenv INC_NETCDF        "$(ROOT_LIBRARY_DIR)/include"
-#     setenv LIB_NETCDF        "$(ROOT_LIBRARY_DIR)/lib"
-#     setenv INC_HDF5          "$(ROOT_LIBRARY_DIR)/include"
-#     setenv LIB_HDF5          "$(ROOT_LIBRARY_DIR)/lib"
-#     setenv LIB_ZLIB          "$(ROOT_LIBRARY_DIR)/lib"  
+#     setenv ROOT_LIBRARY_DIR same directory as root_library_dir above
+#     setenv GC_BIN           $(ROOT_LIBRARY_DIR)/bin
+#     setenv GC_INCLUDE       $(ROOT_LIBRARY_DIR)/include
+#     setenv GC_LIB           $(ROOT_LIBRARY_DIR)/lib 
 #                                                                             .
 #     Then type "source ~/.cshrc" at the Unix prompt to accept the changes.
 #                                                                             .
 #                                                                             .
-#     If you use "sh" or "bash", add this to your .bashrc file:
+#     If you use "sh",   add this to your .profile file:
+#     If you use "bash", add this to your .bashrc  file:
 #     --------------------------------------------------------------------
-#     ROOT_LIBRARY_DIR="same directory as root_library_dir above"
-#     INC_NETCDF=$(ROOT_LIBRARY_DIR)/include
-#     LIB_NETCDF=$(ROOT_LIBRARY_DIR)/lib
-#     INC_HDF5=$(ROOT_LIBRARY_DIR)/include
-#     LIB_HDF5=$(ROOT_LIBRARY_DIR)/lib
-#     LIB_ZLIB=$(ROOT_LIBRARY_DIR)/lib   
-#     export INC_NETCDF
-#     export LIB_NETCDF
-#     export INC_HDF5
-#     export LIB_HDF5
-#     export LIB_ZLIB
+#     ROOT_LIBRARY_DIR=same directory as root_library_dir above
+#     export ROOT_LIBRARY_DIR
+#     GC_BIN=$(ROOT_LIBRARY_DIR)/bin
+#     export GC_BIN
+#     GC_INCLUDE=$(ROOT_LIBRARY_DIR)/include
+#     export GC_INCLUDE
+#     GC_LIB=$(ROOT_LIBRARY_DIR)/lib
+#     export GC_LIB
 #                                                                             .
 #     Then type "source ~/.profile" (for sh) 
 #     or        "source ~/.bashrc"  (for bash)
 #     to accept the changes.
-#                                                                             .
-#  NOTE: The "netCDF CLASSIC" library does not depend on HDF-5 or ZLIB,
-#  so you can set INC_HDF5, LIB_HDF5, and LIB_ZLIB to "" if you wish.
-#                                                                             .
+#
 # !REVISION HISTORY: 
 #  26 Apr 2012 - R. Yantosca - Initial version, based on NASA Baselibs
 #  27 Apr 2012 - R. Yantosca - Now do not build ZLIB for netCDF-3
@@ -143,6 +136,7 @@
 #  02 May 2012 - R. Yantosca - Added "display" target for printing variables
 #  02 May 2012 - R. Yantosca - Updated to netCDF-4.2
 #  08 May 2012 - R. Yantosca - FINALLY works with netcdf-fortran-4.2!!!
+#  10 May 2012 - R. Yantosca - Updated comments about GC environment variables
 #EOP
 #------------------------------------------------------------------------------
 #BOC
