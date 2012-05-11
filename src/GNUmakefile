@@ -27,11 +27,11 @@
 #  To build the netCDF-4 library (and related libraries) using the Intel
 #  Fortran Compiler ("IFORT"), type:
 #                                                                             .
-#     make PREFIX=root_library_dir netcdf4
+#     make PREFIX=root_library_dir
 #                                                                             .
 #  To build the libraries for the PGI compiler, type:
 #                                                                             .
-#     make COMPILER=pgi PREFIX=root_library_dir netcdf4
+#     make COMPILER=pgi PREFIX=root_library_dir
 #                                                                             .
 #  Where "root_library_dir" is the full path of the directory where 
 #  you would like to install the libraries.  If you have sysadmin privileges, 
@@ -64,11 +64,11 @@
 #  To build the "classic" netCDF libraries (which lack the advanced features
 #  of netCDF-4) type:
 #                                                                             .
-#     make PREFIX=root_library_dir nc_classic
+#     make CLASSIC=yes PREFIX=root_library_dir
 #                                                                             .
 #  To build the libraries for the PGI compiler, type:
 #                                                                             .
-#     make COMPILER=pgi PREFIX=root_library_dir nc_classic
+#     make CLASSIC=yes COMPILER=pgi PREFIX=root_library_dir
 #                                                                             .
 #  Where "root_library_dir" is the full path of the directory where 
 #  you would like to install the libraries.  If you have sysadmin privileges, 
@@ -117,11 +117,11 @@
 #     --------------------------------------------------------------------
 #     ROOT_LIBRARY_DIR=same directory as root_library_dir above
 #     export ROOT_LIBRARY_DIR
-#     GC_BIN=$(ROOT_LIBRARY_DIR)/bin
+#     GC_BIN=$ROOT_LIBRARY_DIR/bin
 #     export GC_BIN
-#     GC_INCLUDE=$(ROOT_LIBRARY_DIR)/include
+#     GC_INCLUDE=$ROOT_LIBRARY_DIR/include
 #     export GC_INCLUDE
-#     GC_LIB=$(ROOT_LIBRARY_DIR)/lib
+#     GC_LIB=$ROOT_LIBRARY_DIR/lib
 #     export GC_LIB
 #                                                                             .
 #     Then type "source ~/.profile" (for sh) 
@@ -137,6 +137,9 @@
 #  02 May 2012 - R. Yantosca - Updated to netCDF-4.2
 #  08 May 2012 - R. Yantosca - FINALLY works with netcdf-fortran-4.2!!!
 #  10 May 2012 - R. Yantosca - Updated comments about GC environment variables
+#  11 May 2012 - R. Yantosca - Fixed errors in comments
+#  11 May 2012 - R. Yantosca - Add GCC variable to use GCC C-compilers
+#                              instead of icc/icpc and pgcc, pgcpp compilers
 #EOP
 #------------------------------------------------------------------------------
 #BOC
@@ -158,6 +161,11 @@ DOC             := doc
 # IFORT is default compiler
 ifndef COMPILER
 COMPILER        := ifort
+endif
+
+# Use the GNU C compilers instead of Intel/PGI compilers
+ifndef GCC
+GCC             := no
 endif
 
 # Determine if we want to build netCDF-4 or netCDF-CLASSIC
@@ -197,12 +205,17 @@ ifeq ($(COMPILER),ifort)
 FC              := ifort
 F90             := ifort
 F77             := ifort
+ifeq ($(GCC),yes)
+CC              := gcc
+CXX             := g++
+else
 CC              := icc
 CXX             := icpc
-CPP             := "icc -c -E"
-CFLAGS          := "-fpic -mcmodel=medium"
+endif
+CPP             := "$(CC) -c -E"
 FFLAGS          := "-fpic -mcmodel=medium"
 FCFLAGS         := "-fpic -mcmodel=medium"
+CFLAGS          := "-fpic -mcmodel=medium"
 CXXFLAGS        := "-fpic -mcmodel=medium"
 CPPFLAGS        := -I$(PREFIX)/include
 LDFLAGS         := -L$(PREFIX)/lib
@@ -214,12 +227,17 @@ ifeq ($(COMPILER),pgi)
 FC              := pgf90
 F90             := pgf90
 F77             := pgf90
+ifeq ($(GCC),yes)
+CC              := gcc
+CXX             := g++
+else
 CC              := pgcc
 CXX             := pgcpp
-CPP             := "pgcc -c -E"
-CFLAGS          := "-fpic -mcmodel=medium"
+endif
+CPP             := "$(CC) -c -E"
 FFLAGS          := "-fpic -mcmodel=medium"
 FCFLAGS         := "-fpic -mcmodel=medium"
+CFLAGS          := "-fpic -mcmodel=medium"
 CXXFLAGS        := "-fpic -mcmodel=medium"
 CPPFLAGS        := -I$(PREFIX)/include          
 LDFLAGS         := -L$(PREFIX)/lib              
