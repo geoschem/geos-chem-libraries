@@ -27,11 +27,11 @@
 #  To build the netCDF-4 library (and related libraries) using the Intel
 #  Fortran Compiler ("IFORT"), type:
 #                                                                             .
-#     make PREFIX=root_library_dir
+#     make PREFIX=root_library_dir [GCC=yes]
 #                                                                             .
 #  To build the libraries for the PGI compiler, type:
 #                                                                             .
-#     make COMPILER=pgi PREFIX=root_library_dir
+#     make COMPILER=pgi PREFIX=root_library_dir [GCC=yes]
 #                                                                             .
 #  Where "root_library_dir" is the full path of the directory where 
 #  you would like to install the libraries.  If you have sysadmin privileges, 
@@ -44,8 +44,8 @@
 #  If you do not select a value for PREFIX, then the default values of
 #  "root_library_dir" will be assigned:
 #                                                                             .
-#     For IFORT compiler:  root_library_dir = "../opt/ifort"
-#     For PGI   compiler:  root_library_dir = "../opt/pgi"
+#     For IFORT compiler:  root_library_dir = "../opt/ifort/nc4"
+#     For PGI   compiler:  root_library_dir = "../opt/pgi/nc4"
 #                                                                             .
 #  You can install the libraries into the default "root_library_dir" path
 #  and then have your sysadmin move them to a common space on your machine.
@@ -53,10 +53,14 @@
 #  Individual library files will be installed into various subdirectories
 #  of "root_library_dir", as follows:
 #                                                                             .
-#     root_library_dir/nc4/bin              # nc-config, ncdump, ncgen, etc.
-#     root_library_dir/nc4/include          # Include files (*.h)
-#     root_library_dir/nc4/lib              # Library file (libz.a)
-#     root_library_dir/nc4/share            # Manual pages & documentation
+#     root_library_dir/bin            # nc-config, ncdump, ncgen, etc.
+#     root_library_dir/include        # Include files (*.h)
+#     root_library_dir/lib            # Library files (libz.a)
+#     root_library_dir/share          # Manual pages & documentation
+#                                                                             .
+#  Finally, if you do not have the Intel C/C++ compilers or PGI C/C++ 
+#  compilers installed on your system, using the GCC=yes option will tell 
+#  the installer to use the GNU C/C++ compilers (gcc, g++) instead. 
 #                                                                             .
 #                                                                             .
 #  CALLING SEQUENCE TO BUILD "netCDF CLASSIC"
@@ -64,11 +68,11 @@
 #  To build the "classic" netCDF libraries (which lack the advanced features
 #  of netCDF-4) type:
 #                                                                             .
-#     make CLASSIC=yes PREFIX=root_library_dir
+#     make CLASSIC=yes PREFIX=root_library_dir [GCC=yes]
 #                                                                             .
 #  To build the libraries for the PGI compiler, type:
 #                                                                             .
-#     make CLASSIC=yes COMPILER=pgi PREFIX=root_library_dir
+#     make CLASSIC=yes COMPILER=pgi PREFIX=root_library_dir [GCC=yes]
 #                                                                             .
 #  Where "root_library_dir" is the full path of the directory where 
 #  you would like to install the libraries.  If you have sysadmin privileges, 
@@ -81,8 +85,8 @@
 #  If you do not select a value for PREFIX, then the default values of
 #  "root_library_dir" will be assigned:
 #                                                                             .
-#     For IFORT compiler:  root_library_dir = "../opt/ifort"
-#     For PGI   compiler:  root_library_dir = "../opt/pgi"
+#     For IFORT compiler:  root_library_dir = "../opt/ifort/nc_classic"
+#     For PGI   compiler:  root_library_dir = "../opt/pgi/nc_classic"
 #                                                                             .
 #  You can install the libraries into the default "root_library_dir" path
 #  and then have your sysadmin move them to a common space on your machine.
@@ -90,10 +94,14 @@
 #  Individual library files will be installed into various subdirectories
 #  of "root_library_dir", as follows:
 #                                                                             .
-#     root_library_dir/nc_classic/bin       # nc-config, ncdump, ncgen, etc.
-#     root_library_dir/nc_classic/include   # Include files (*.h)
-#     root_library_dir/nc_classic/lib       # Library files (*.a)
-#     root_library_dir/nc_classic/share     # Manual pages & documentation
+#     root_library_dir/bin            # nc-config, ncdump, ncgen, etc.
+#     root_library_dir/include        # Include files (*.h)
+#     root_library_dir/lib            # Library files (*.a)
+#     root_library_dir/share          # Manual pages & documentation
+#
+#  Finally, if you do not have the Intel C/C++ compilers or PGI C/C++ 
+#  compilers installed on your system, using the GCC=yes option will tell 
+#  the installer to use the GNU C/C++ compilers (gcc, g++) instead. 
 #                                                                             .
 #                                                                             .
 #  TELLING GEOS-CHEM WHERE TO FIND THE LIBRARIES:
@@ -105,9 +113,9 @@
 #     If you use "csh" or "tcsh", add this to your .cshrc file:
 #     --------------------------------------------------------------------
 #     setenv ROOT_LIBRARY_DIR same directory as root_library_dir above
-#     setenv GC_BIN           $(ROOT_LIBRARY_DIR)/bin
-#     setenv GC_INCLUDE       $(ROOT_LIBRARY_DIR)/include
-#     setenv GC_LIB           $(ROOT_LIBRARY_DIR)/lib 
+#     setenv GC_BIN           $ROOT_LIBRARY_DIR/bin
+#     setenv GC_INCLUDE       $ROOT_LIBRARY_DIR/include
+#     setenv GC_LIB           $ROOT_LIBRARY_DIR/lib 
 #                                                                             .
 #     Then type "source ~/.cshrc" at the Unix prompt to accept the changes.
 #                                                                             .
@@ -116,12 +124,11 @@
 #     If you use "bash", add this to your .bashrc  file:
 #     --------------------------------------------------------------------
 #     ROOT_LIBRARY_DIR=same directory as root_library_dir above
-#     export ROOT_LIBRARY_DIR
 #     GC_BIN=$ROOT_LIBRARY_DIR/bin
-#     export GC_BIN
 #     GC_INCLUDE=$ROOT_LIBRARY_DIR/include
-#     export GC_INCLUDE
 #     GC_LIB=$ROOT_LIBRARY_DIR/lib
+#     export GC_BIN
+#     export GC_INCLUDE
 #     export GC_LIB
 #                                                                             .
 #     Then type "source ~/.profile" (for sh) 
@@ -138,7 +145,7 @@
 #  08 May 2012 - R. Yantosca - FINALLY works with netcdf-fortran-4.2!!!
 #  10 May 2012 - R. Yantosca - Updated comments about GC environment variables
 #  11 May 2012 - R. Yantosca - Fixed errors in comments
-#  11 May 2012 - R. Yantosca - Add GCC variable to use GCC C-compilers
+#  11 May 2012 - R. Yantosca - Add GCC variable to use gcc/g++ compilers
 #                              instead of icc/icpc and pgcc, pgcpp compilers
 #EOP
 #------------------------------------------------------------------------------
