@@ -147,6 +147,8 @@
 #  11 May 2012 - R. Yantosca - Fixed errors in comments
 #  11 May 2012 - R. Yantosca - Add GCC variable to use gcc/g++ compilers
 #                              instead of icc/icpc and pgcc, pgcpp compilers
+#  06 Oct 2014 - R. Yantosca - Updated netCDF libraries to netcdf-4.3.2 and
+#                              netcdf-fortran-4.1.1 for newer Linux builds
 #EOP
 #------------------------------------------------------------------------------
 #BOC
@@ -161,8 +163,8 @@ SHELL           := /bin/sh
 # Code directories 
 CODE_ZLIB       := zlib-1.2.6
 CODE_HDF5       := hdf5-1.8.8
-CODE_NC4        := netcdf-4.2
-CODE_NC4_F90    := netcdf-fortran-4.2
+CODE_NC4        := netcdf-4.3.2
+CODE_NC4_F90    := netcdf-fortran-4.4.1
 DOC             := doc
 
 # IFORT is default compiler
