@@ -422,7 +422,7 @@ clean_hdf5:
 	rm -f $(CODE_HDF5)/$(CODE_HDF5).install
 	@$(MAKE) -C $(CODE_HDF5) clean
 
-clean_netcdf:
+clean_netcdf clean_nc4:
 	rm -f $(CODE_NC4)/$(CODE_NC4).config*
 	rm -f $(CODE_NC4)/$(CODE_NC4).install*
 	rm -f $(CODE_NC4_F90)/$(CODE_NC4_F90).config*
