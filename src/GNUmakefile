@@ -149,6 +149,8 @@
 #                              instead of icc/icpc and pgcc, pgcpp compilers
 #  06 Oct 2014 - R. Yantosca - Updated netCDF libraries to netcdf-4.3.2 and
 #                              netcdf-fortran-4.1.1 for newer Linux builds
+#  23 Oct 2014 - R. Yantosca - Updated to HDF-1.8.9
+#  23 Oct 2014 - R. Yantosca - Now use regexp for yes/no questions (GCC=yes)
 #EOP
 #------------------------------------------------------------------------------
 #BOC
@@ -158,99 +160,101 @@
 #==============================================================================
 
 # Default shell
-SHELL           := /bin/sh
+SHELL            := /bin/bash
 
 # Code directories 
-CODE_ZLIB       := zlib-1.2.6
-CODE_HDF5       := hdf5-1.8.9
-CODE_NC4        := netcdf-4.3.2
-CODE_NC4_F90    := netcdf-fortran-4.4.1
-DOC             := doc
+CODE_ZLIB        := zlib-1.2.6
+CODE_HDF5        := hdf5-1.8.9
+CODE_NC4         := netcdf-4.3.2
+CODE_NC4_F90     := netcdf-fortran-4.4.1
+DOC              := doc
 
 # IFORT is default compiler
 ifndef COMPILER
-COMPILER        := ifort
+ COMPILER        := ifort
 endif
 
 # Use the GNU C compilers instead of Intel/PGI compilers
 ifndef GCC
-GCC             := no
+ GCC             := no
 endif
 
 # Determine if we want to build netCDF-4 or netCDF-CLASSIC
 ifndef CLASSIC
-CLASSIC         := no
+ CLASSIC         := no
 endif
 
 # If CLASSIC=yes, then we'll build the netCDF classic library
 # Otherwise, we'll build the full netCDF-4.2 library
 ifeq ($(CLASSIC),yes)
-DEFAULT_TARGET  := nc_classic verify
-PREF_DIR        := nc_classic
+ DEFAULT_TARGET  := nc_classic verify
+ PREF_DIR        := nc_classic
 else
-DEFAULT_TARGET  := zlib hdf5 nc4 verify
-PREF_DIR        := nc4
+ DEFAULT_TARGET  := zlib hdf5 nc4 verify
+ PREF_DIR        := nc4
 endif
 
 # Default dir where library files will be created
 # This should be in GEOS-Chem-Libraries/opt/$(COMPILER)
 ifndef PREFIX
-PREFIX          := $(PWD)
-ifeq ($(findstring src,$(PREFIX)),src)
-PREFIX          := $(PREFIX)/../opt/$(COMPILER)/$(PREF_DIR)
-else
-PREFIX          := $(PREFIX)/opt/$(COMPILER)/$(PREF_DIR)
-endif  
+ PREFIX          := $(PWD)
+ ifeq ($(findstring src,$(PREFIX)),src)
+  PREFIX         := $(PREFIX)/../opt/$(COMPILER)/$(PREF_DIR)
+ else
+  PREFIX         := $(PREFIX)/opt/$(COMPILER)/$(PREF_DIR)
+ endif  
 endif
 
 # Output directories for each library build
-PREFIX_ZLIB     := $(PREFIX)
-PREFIX_HDF5     := $(PREFIX)
-PREFIX_DOXY     := $(PREFIX)
-PREFIX_NC4      := $(PREFIX)
+PREFIX_ZLIB      := $(PREFIX)
+PREFIX_HDF5      := $(PREFIX)
+PREFIX_DOXY      := $(PREFIX)
+PREFIX_NC4       := $(PREFIX)
 
 # Settings for IFORT compilers
 ifeq ($(COMPILER),ifort) 
-FC              := ifort
-F90             := ifort
-F77             := ifort
-ifeq ($(GCC),yes)
-CC              := gcc
-CXX             := g++
-else
-CC              := icc
-CXX             := icpc
-endif
-CPP             := "$(CC) -c -E"
-FFLAGS          := "-fpic -mcmodel=medium"
-FCFLAGS         := "-fpic -mcmodel=medium"
-CFLAGS          := "-fpic -mcmodel=medium"
-CXXFLAGS        := "-fpic -mcmodel=medium"
-CPPFLAGS        := -I$(PREFIX)/include
-LDFLAGS         := -L$(PREFIX)/lib
-LD_LIBRARY_PATH := $(PREFIX)/lib:$(LD_LIBRARY_PATH)
+ FC              := ifort
+ F90             := ifort
+ F77             := ifort
+ REGEXP          :=(^[Yy]|^[Yy][Ee][Ss])
+ ifeq ($(shell [[ "$(GCC)" =~ $(REGEXP) ]] && echo true),true)
+  CC             := gcc
+  CXX            := g++
+ else
+  CC             := icc
+  CXX            := icpc
+ endif
+ CPP             := "$(CC) -c -E"
+ FFLAGS          := "-fpic -mcmodel=medium"
+ FCFLAGS         := "-fpic -mcmodel=medium"
+ CFLAGS          := "-fpic -mcmodel=medium"
+ CXXFLAGS        := "-fpic -mcmodel=medium"
+ CPPFLAGS        := -I$(PREFIX)/include
+ LDFLAGS         := -L$(PREFIX)/lib
+ LD_LIBRARY_PATH := $(PREFIX)/lib:$(LD_LIBRARY_PATH)
 endif
 
 # Settings for PGI compilers
 ifeq ($(COMPILER),pgi) 
-FC              := pgf90
-F90             := pgf90
-F77             := pgf90
-ifeq ($(GCC),yes)
-CC              := gcc
-CXX             := g++
-else
-CC              := pgcc
-CXX             := pgcpp
-endif
-CPP             := "$(CC) -c -E"
-FFLAGS          := "-fpic -mcmodel=medium"
-FCFLAGS         := "-fpic -mcmodel=medium"
-CFLAGS          := "-fpic -mcmodel=medium"
-CXXFLAGS        := "-fpic -mcmodel=medium"
-CPPFLAGS        := -I$(PREFIX)/include          
-LDFLAGS         := -L$(PREFIX)/lib              
-LD_LIBRARY_PATH := $(PREFIX)/lib:$(LD_LIBRARY_PATH)
+ FC              := pgf90
+ F90             := pgf90
+ F77             := pgf90
+ REGEXP          :=(^[Yy]|^[Yy][Ee][Ss])
+ ifeq ($(shell [[ "$(GCC)" =~ $(REGEXP) ]] && echo true),true)
+  CC             := gcc
+  CXX            := g++
+ else
+  CC             := pgcc
+  CXX            := pgcpp
+ endif
+ CPP             := "$(CC) -c -E"
+ FFLAGS          := "-fpic -mcmodel=medium"
+ FCFLAGS         := "-fpic -mcmodel=medium"
+ CFLAGS          := "-fpic -mcmodel=medium"
+ CXXFLAGS        := "-fpic -mcmodel=medium"
+ CPPFLAGS        := -I$(PREFIX)/include          
+ LDFLAGS         := -L$(PREFIX)/lib              
+ LD_LIBRARY_PATH := $(PREFIX)/lib:$(LD_LIBRARY_PATH)
 endif
 
 export LD_LIBRARY_PATH
