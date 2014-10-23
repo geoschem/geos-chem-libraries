@@ -151,6 +151,8 @@
 #                              netcdf-fortran-4.1.1 for newer Linux builds
 #  23 Oct 2014 - R. Yantosca - Updated to HDF-1.8.9
 #  23 Oct 2014 - R. Yantosca - Now use regexp for yes/no questions (GCC=yes)
+#  23 Oct 2014 - R. Yantosca - Now build netCDF F90 interface by default;
+#                              F2003=yes selects the netCDF F2003 interface.
 #EOP
 #------------------------------------------------------------------------------
 #BOC
@@ -259,6 +261,17 @@ endif
 
 export LD_LIBRARY_PATH
 
+# NOTE: netcdf-fortran-4.4.1 will build the Fortran 2003 netCDF interface 
+# by default.  But most applications are set up to use the Fortran 90
+# interface.  Assume that we will use the Fortran 90 interface unless
+# specifically requested by the user.
+REGEXP          :=(^[Yy]|^[Yy][Ee][Ss])
+ifeq ($(shell [[ "$(F2003)" =~ $(REGEXP) ]] && echo true),true)
+ NCDF_F2003_FLAG :="--enable-f03"
+else 
+ NCDF_F2003_FLAG :="--disable-f03"
+endif
+
 #==============================================================================
 # Makefile targets
 #==============================================================================
@@ -327,6 +340,7 @@ nc4:
 	      LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)                            &&\
               ./configure --prefix=$(PREFIX_NC4)                              \
 	                  --disable-shared                                    \
+                          $(NCDF_F2003_FLAG)                                  \
 	                  F77=$(F77)       FFLAGS=$(FFLAGS)                   \
 	                  FC=$(FC)         FCFLAGS=$(FCFLAGS)                 \
 	                  CC=$(CC)         CFLAGS=$(CFLAGS)                   \
@@ -366,6 +380,7 @@ nc_classic:
 	   ./configure --prefix=$(PREFIX_NC4)                                 \
                        --disable-shared                                       \
 	               --disable-netcdf-4                                     \
+                       $(NCDF_F2003_FLAG)                                     \
 	               F77=$(F77)       FFLAGS=$(FFLAGS)                      \
 	               FC=$(FC)         FCFLAGS=$(FCFLAGS)                    \
 	               CC=$(CC)         CFLAGS=$(CFLAGS)                      \
