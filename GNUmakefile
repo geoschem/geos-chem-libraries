@@ -19,7 +19,7 @@
 #BOC
 
 # Local variables
-SHELL := /bin/sh
+SHELL := /bin/bash
 SRC   := src
 
 all:
