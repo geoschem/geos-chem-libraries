@@ -152,6 +152,9 @@
 #  23 Oct 2014 - R. Yantosca - Updated to HDF-1.8.9
 #  23 Oct 2014 - R. Yantosca - Now use regexp for yes/no questions (GCC=yes)
 #  24 Oct 2014 - R. Yantosca - Now enable parallel netCDF
+#  24 Oct 2014 - R. Yantosca - Revert to netcdf-fortran-4.2 in order to get
+#                              the Fortran-90 support.  netCDF 4.4.1 seems
+#                              to have migrated to Fortan 2003. 
 #EOP
 #------------------------------------------------------------------------------
 #BOC
@@ -167,7 +170,7 @@ SHELL            := /bin/bash
 CODE_ZLIB        := zlib-1.2.6
 CODE_HDF5        := hdf5-1.8.9
 CODE_NC4         := netcdf-4.3.2
-CODE_NC4_F90     := netcdf-fortran-4.4.1
+CODE_NC4_F90     := netcdf-fortran-netcdf-fortran-4.2
 DOC              := doc
 
 # IFORT is default compiler
@@ -336,7 +339,7 @@ nc4:
                           $(NCDF_F90_FLAG)                                    \
 	                  F77=$(F77)       FFLAGS=$(FFLAGS)                   \
 	                  FC=$(FC)         FCFLAGS=$(FCFLAGS)                 \
-	                  CC=$(CC)         CFLAGS="$(CFLAGS) -D$(FC)"         \
+	                  CC=$(CC)         CFLAGS=$(CFLAGS)                   \
 	                  CPP=$(CPP)       CPPFLAGS=$(CPPFLAGS)               \
 	                  LIBS="-lnetcdf"  LDFLAGS=$(LDFLAGS)               &&\
 	      touch $(CODE_NC4_F90).config                                  &&\
@@ -376,7 +379,7 @@ nc_classic:
                        $(NCDF_F90_FLAG)                                       \
 	               F77=$(F77)       FFLAGS=$(FFLAGS)                      \
 	               FC=$(FC)         FCFLAGS=$(FCFLAGS)                    \
-	               CC=$(CC)         CFLAGS="$(CFLAGS) -D($FC)"            \
+	               CC=$(CC)         CFLAGS=$(CFLAGS)                      \
 	               CPP=$(CPP)       CPPFLAGS=$(CPPFLAGS)                  \
 	               LIBS="-lnetcdf"  LDFLAGS=$(LDFLAGS)                  &&\
 	   touch $(CODE_NC4_F90).config.classic                             &&\
