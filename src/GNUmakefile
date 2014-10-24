@@ -262,6 +262,7 @@ ifeq ($(COMPILER),pgi)
  LD_LIBRARY_PATH := $(PREFIX)/lib:$(LD_LIBRARY_PATH)
 endif
 
+# Export the linker library
 export LD_LIBRARY_PATH
 
 #==============================================================================
@@ -295,7 +296,6 @@ hdf5:
                  --prefix=$(PREFIX_HDF5)                                      \
                  --disable-shared                                             \
                  --with-zlib=$(PREFIX_ZLIB)                                   \
-                 --enable-parallel                                            \
 	         FC=$(FC)      FCFLAGS=$(FCFLAGS)                             \
 	         CC=$(CC)      CFLAGS=$(CFLAGS)                               \
 	         CXX=$(CXX)    CXXFLAGS=$(CPPFLAGS)                           \
@@ -317,10 +317,10 @@ nc4:
 	else                                                                  \
 	   if [ -f $(CODE_HDF5)/$(CODE_HDF5).install ] ; then                 \
 	      cd $(CODE_NC4)                                                &&\
-	      ./configure --prefix=$(PREFIX_NC4)                              \
+	      ./configure                                                     \
+                          --prefix=$(PREFIX_NC4)                              \
 	                  --disable-shared                                    \
 	                  --disable-doxygen                                   \
-                          --enable-parallel-tests
 	                  CC=$(CC)      CFLAGS=$(CFLAGS)                      \
 	                  CPP=$(CPP)    CPPFLAGS=$(CPPFLAGS)                  \
 	                  LIBS=$(LIBS)  LDFLAGS=$(LDFLAGS)                  &&\
