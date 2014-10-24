@@ -21,7 +21,12 @@ endif
 
 # This is the list of subdirs for which Makefiles will be constructed
 # and run. 
-SUBDIRS = $(F90_DIR) fortran nf_test man4 examples
+#---------------------------------------------------------------------------
+# Prior to 10/24/14:
+# Skip making the documentation (man4) to avoid LaTeX problems (bmy, 10/24/14)
+#SUBDIRS = $(F90_DIR) fortran nf_test man4 examples
+#---------------------------------------------------------------------------
+SUBDIRS = $(F90_DIR) fortran nf_test examples
 
 # Remove these generated files, for a distclean.
 DISTCLEANFILES = VERSION comps.txt test_prog

@@ -336,12 +336,11 @@ nc4:
 	      LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)                            &&\
               ./configure --prefix=$(PREFIX_NC4)                              \
 	                  --disable-shared                                    \
-                          $(NCDF_F90_FLAG)                                    \
-	                  F77=$(F77)       FFLAGS=$(FFLAGS)                   \
-	                  FC=$(FC)         FCFLAGS=$(FCFLAGS)                 \
-	                  CC=$(CC)         CFLAGS=$(CFLAGS)                   \
-	                  CPP=$(CPP)       CPPFLAGS=$(CPPFLAGS)               \
-	                  LIBS="-lnetcdf"  LDFLAGS=$(LDFLAGS)               &&\
+	                  F77=$(F77)               FFLAGS=$(FFLAGS)           \
+	                  FC=$(FC)                 FCFLAGS=$(FCFLAGS)         \
+	                  CC=$(CC)                 CFLAGS=$(CFLAGS)           \
+	                  CPP=$(CPP)               CPPFLAGS=$(CPPFLAGS)       \
+	                  LIBS="$(LIBS) -lnetcdf"  LDFLAGS=$(LDFLAGS)       &&\
 	      touch $(CODE_NC4_F90).config                                  &&\
 	      $(MAKE) check                                                 &&\
 	      $(MAKE) install                                               &&\
@@ -376,12 +375,11 @@ nc_classic:
 	   ./configure --prefix=$(PREFIX_NC4)                                 \
                        --disable-shared                                       \
 	               --disable-netcdf-4                                     \
-                       $(NCDF_F90_FLAG)                                       \
-	               F77=$(F77)       FFLAGS=$(FFLAGS)                      \
-	               FC=$(FC)         FCFLAGS=$(FCFLAGS)                    \
-	               CC=$(CC)         CFLAGS=$(CFLAGS)                      \
-	               CPP=$(CPP)       CPPFLAGS=$(CPPFLAGS)                  \
-	               LIBS="-lnetcdf"  LDFLAGS=$(LDFLAGS)                  &&\
+	               F77=$(F77)               FFLAGS=$(FFLAGS)              \
+	               FC=$(FC)                 FCFLAGS=$(FCFLAGS)            \
+	               CC=$(CC)                 CFLAGS=$(CFLAGS)              \
+	               CPP=$(CPP)               CPPFLAGS=$(CPPFLAGS)          \
+	               LIBS="$(LIBS) -lnetcdf"  LDFLAGS=$(LDFLAGS)          &&\
 	   touch $(CODE_NC4_F90).config.classic                             &&\
 	   $(MAKE) check                                                    &&\
 	   $(MAKE) install                                                  &&\
