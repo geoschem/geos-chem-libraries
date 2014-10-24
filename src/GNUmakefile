@@ -170,7 +170,7 @@ SHELL            := /bin/bash
 CODE_ZLIB        := zlib-1.2.6
 CODE_HDF5        := hdf5-1.8.9
 CODE_NC4         := netcdf-4.3.2
-CODE_NC4_F90     := netcdf-fortran-netcdf-fortran-4.2
+CODE_NC4_F90     := netcdf-fortran-4.2
 DOC              := doc
 
 # IFORT is default compiler
